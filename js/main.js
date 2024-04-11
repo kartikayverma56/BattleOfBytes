@@ -145,3 +145,31 @@ jQuery(document).ready(function( $ ) {
 // custom code
 
 });
+function sendEmail(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Retrieve form data
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    let subject = document.getElementById('subject').value;
+    let message = document.querySelector('textarea[name="message"]').value;
+
+    // Send email using SMTPJS
+    Email.send({
+		SecureToken : "b31e154b-edc9-4646-ada1-fc02b4048f9d",
+		To : 'kartikayverma57@gmail.com',
+        From: email, // Use the provided email as the sender
+        Subject: subject,
+        Body: "Name: " + name + "<br>Email: " + email + "<br>Message: " + message
+    }).then(
+        function (message) {
+            // Show success message
+            document.getElementById('sendmessage').style.display = 'block';
+            // Clear form fields
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('subject').value = '';
+            document.querySelector('textarea[name="message"]').value = '';
+        }
+    );
+}
